@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="splash_background">@color/colorPrimaryDark</color>
+    <color name="entrance_background">@color/colorPrimaryDark</color>
+    <color name="entrance_tab">@color/colorPrimaryDark</color>
+    <color name="entrance_tab_texts">@color/colorPrimaryDark</color>
+    <color name="entrance_texts">@color/colorPrimaryDark</color>
+    <color name="entrance_google_texts">@color/colorPrimaryDark</color>
+    <color name="entrance_google_border">@color/colorPrimaryDark</color>
 </resources>

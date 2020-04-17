@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="splash_icon_side">128dp</dimen>
+    <dimen name="entrance_tab_height">64dp</dimen>
+    <dimen name="entrance_tab_texts">16dp</dimen>
+    <dimen name="entrance_texts_height">48dp</dimen>
+    <dimen name="entrance_google_border_thickness">2dp</dimen>
+    <dimen name="avatar_side">128dp</dimen>
 </resources>
