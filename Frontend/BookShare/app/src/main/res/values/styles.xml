@@ -8,4 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabLayoutTextAppearance</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.DarkActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textAppearance">@style/TabLayoutTextAppearance</item>
+    </style>
+
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:fontFamily">@font/dosis</item>
+        <item name="android:textSize">@dimen/entrance_tab_texts</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">@color/entrance_tab_texts</item>
+    </style>
 </resources>

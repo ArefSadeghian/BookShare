@@ -16,8 +16,8 @@ public class EntranceActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrance);
-        //tabLayout = (TabLayout) findViewById(R.id.activity_entrance_view_pager_tab_layout);
-        //viewPager = (ViewPager) findViewById(R.id.activity_entrance_viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.entrance_tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.entrance_viewPager);
         pagerAdapter = new EntranceActivityPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

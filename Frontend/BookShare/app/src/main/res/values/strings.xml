@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">BookShare</string>
+    <string name="entrance_tab_1">ورود</string>
+    <string name="entrance_tab_2">ثبتنام</string>
+
 </resources>

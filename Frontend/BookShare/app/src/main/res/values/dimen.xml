@@ -4,6 +4,12 @@
     <dimen name="entrance_tab_height">64dp</dimen>
     <dimen name="entrance_tab_texts">16dp</dimen>
     <dimen name="entrance_texts_height">48dp</dimen>
+    <dimen name="entrance_indicator_height">4dp</dimen>
     <dimen name="entrance_google_border_thickness">2dp</dimen>
-    <dimen name="avatar_side">128dp</dimen>
+    <dimen name="entrance_avatar_side">128dp</dimen>
+    <dimen name="main_navigation_view_width">256dp</dimen>
+    <dimen name="dialog_account_large_margins">16dp</dimen>
+    <dimen name="dialog_account_header_height">128dp</dimen>
+    <dimen name="dialog_account_header_icon">128dp</dimen>
+
 </resources>
