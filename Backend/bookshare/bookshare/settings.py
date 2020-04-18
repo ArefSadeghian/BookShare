@@ -49,6 +49,12 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'account.User'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sadbookshare@gmail.com'
+EMAIL_HOST_PASSWORD = 'pzbxabxcrvoftvim'
+EMAIL_PORT = 587
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -73,7 +79,7 @@ ROOT_URLCONF = 'bookshare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': (os.path.join(BASE_DIR, 'account/templates')),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
