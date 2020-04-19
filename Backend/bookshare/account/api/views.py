@@ -28,7 +28,7 @@ def api_register_user_view(request):
     if request.method == 'POST':        
         data = {}
 
-        email = request.data.get('email', '0_no_email_provided_0')
+        email = request.data.get('email', '0_no_email_provided_0').lower()
         username = request.data.get('username', '0_no_username_provided_0')
 
         if email == '0_no_email_provided_0':
@@ -52,8 +52,8 @@ def api_register_user_view(request):
         # lowercase email:
         request_data = request.data.copy()
         if 'email' in request_data:
-            request_data['email'] = request_data['email'].lower()
-        serializer = UserRegisterationSerializer(data=request.data)
+            request_data['email'] = email
+        serializer = UserRegisterationSerializer(data=request_data)
 
         if serializer.is_valid():
             new_user = serializer.save()
@@ -62,9 +62,9 @@ def api_register_user_view(request):
             new_user.is_active = False
             new_user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
+            mail_subject = 'Activate your account'
             activation_token = account_activation_token.make_token(new_user)
-            mail_message = render_to_string('acc_active_email.html', {
+            mail_message = render_to_string('activate_email_email.html', {
                         'user': new_user,
                         'domain': current_site.domain,
                         'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
@@ -73,7 +73,7 @@ def api_register_user_view(request):
            
             email_destination = email
             EmailMessage(mail_subject, mail_message, to=[email_destination]).send()
-            return Response({'response': 'Please confirm your email address to complete the registration.'})
+            return Response({'response': 'Please confirm your email address to complete the registration.'}, status=status.HTTP_200_OK)
         
         else:
             data = serializer.errors
@@ -107,6 +107,39 @@ def activate(request, uidb64, token):
     else:
         return Response({'response': 'Error', 'error_message': 'Activation link is invalid!'})
 
+
+@api_view(['POST', ])
+@permission_classes((IsAuthenticated,))
+def api_reset_password_view(request):
+    if request.method == 'POST':
+        email = request.data.get('email', '0_no_email_provided_0').lower()
+
+        data = {}
+        if email == '0_no_email_provided_0':
+            data['response'] = 'Error'
+            data['erroe_message'] = 'No email was provided!'
+            return Response(data)
+
+        if validate_email(email) is None:
+            data['response'] = 'Error'
+            data['error_message'] = 'Sorry, user with this email deos not exists!'
+            return Response(data)
+
+        user = User.objects.get(email=email)
+        new_password = User.objects.make_random_password()
+        user.set_password(new_password)
+        user.save()
+
+        # email verification:
+        mail_subject = 'Retrieve your account password'
+        mail_message = render_to_string('reset_password_email.html', {
+                    'user': user,
+                    'new_password': new_password,
+                })
+        
+        email_destination = email
+        EmailMessage(mail_subject, mail_message, to=[email_destination]).send()
+        return Response({'response': 'We sent a new password to your email account, so Please chack that.'}, status=status.HTTP_200_OK)
 
 
 def validate_email(email):

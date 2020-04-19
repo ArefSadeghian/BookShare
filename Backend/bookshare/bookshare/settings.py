@@ -49,6 +49,7 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'account.User'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sadbookshare@gmail.com'
