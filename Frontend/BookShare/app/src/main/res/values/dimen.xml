@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="toast_text_size">16dp</dimen>
     <dimen name="splash_icon_side">128dp</dimen>
     <dimen name="entrance_tab_height">64dp</dimen>
-    <dimen name="entrance_tab_texts">16dp</dimen>
-    <dimen name="entrance_texts_height">48dp</dimen>
-    <dimen name="entrance_indicator_height">4dp</dimen>
-    <dimen name="entrance_google_border_thickness">2dp</dimen>
-    <dimen name="entrance_avatar_side">128dp</dimen>
+    <dimen name="entrance_tab_texts">18dp</dimen>
+    <dimen name="entrance_indicator_height">2dp</dimen>
     <dimen name="main_navigation_view_width">256dp</dimen>
-    <dimen name="dialog_account_large_margins">16dp</dimen>
-    <dimen name="dialog_account_header_height">128dp</dimen>
-    <dimen name="dialog_account_header_icon">128dp</dimen>
+    <dimen name="main_navigation_view_icon_size">36dp</dimen>
+    <dimen name="main_appBar_height">64dp</dimen>
+    <dimen name="main_appBar_elevation">6dp</dimen>
+    <dimen name="main_appBar_icon_margin">18dp</dimen>
+    <dimen name="sign_inner_margin">8dp</dimen>
+    <dimen name="sign_card_corner_radius">4dp</dimen>
+    <dimen name="sign_card_text_size">16dp</dimen>
+    <dimen name="sign_card_text_padding">8dp</dimen>
+    <dimen name="sign_in_card_height">40dp</dimen>
+    <dimen name="sign_in_card_width">228dp</dimen>
+    <dimen name="sign_in_sign_button_width">64dp</dimen>
+    <dimen name="sign_in_sign_button_corner_radius">8dp</dimen>
+    <dimen name="sign_up_avatar_side">192dp</dimen>
+    <dimen name="sign_up_linearLayout_width">256dp</dimen>
+    <dimen name="sign_up_card_height">56dp</dimen>
+    <dimen name="sign_up_icon_side">24dp</dimen>
+    <dimen name="sign_up_icon_padding">8dp</dimen>
+    <dimen name="sign_up_bottom_corner_radius">36dp</dimen>
+    <dimen name="info_dialog_body_height">300dp</dimen>
+    <dimen name="info_dialog_avatar_side">96dp</dimen>
+    <dimen name="info_dialog_large_margin">18dp</dimen>
+    <dimen name="info_dialog_medium_margin">12dp</dimen>
+    <dimen name="info_dialog_small_margin">8dp</dimen>
+    <dimen name="info_dialog_header_text_size">24dp</dimen>
+    <dimen name="info_dialog_body_title_size">20dp</dimen>
+    <dimen name="info_dialog_body_subtitle_size">16dp</dimen>
+    <dimen name="info_dialog_body_text_size">16dp</dimen>
 
 </resources>

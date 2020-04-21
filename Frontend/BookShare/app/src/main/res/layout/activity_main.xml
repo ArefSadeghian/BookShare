@@ -8,11 +8,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:fitsSystemWindows="false"
-    tools:opRightrawer="right">
+    tools:opRightrawer="right"
+    tools:openDrawer="right">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/main_background">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_appBar_height"
+            app:cardBackgroundColor="@color/main_appBar"
+            app:cardElevation="@dimen/main_appBar_elevation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/main_menu"
+                android:layout_width="@dimen/main_navigation_view_icon_size"
+                android:layout_height="@dimen/main_navigation_view_icon_size"
+                android:src="@drawable/main_menu"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="@dimen/main_appBar_icon_margin"/>
+        </androidx.cardview.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,6 +45,65 @@
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="@dimen/main_navigation_view_width"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:fitsSystemWindows="true"
+        android:background="@color/main_nav_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_navigation_view_width"
+            android:background="@color/info_dialog_header_background"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+                <FrameLayout
+                    android:id="@+id/main_nav_header_frameLayout"
+                    android:layout_width="@dimen/info_dialog_avatar_side"
+                    android:layout_height="@dimen/info_dialog_avatar_side"
+                    android:layout_margin="@dimen/info_dialog_large_margin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sign_up_avatar"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sign_up_circle"/>
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/main_nav_header_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/dosis"
+                    android:textSize="@dimen/info_dialog_header_text_size"
+                    android:text="@string/sign_in_username"
+                    android:textColor="@color/info_dialog_header_text"
+                    android:layout_marginTop="@dimen/info_dialog_small_margin"
+                    android:layout_marginBottom="@dimen/info_dialog_large_margin"
+                    android:layout_marginRight="@dimen/info_dialog_large_margin"
+                    app:layout_constraintTop_toBottomOf="@id/main_nav_header_frameLayout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <ImageView
+                    android:id="@+id/main_nav_haeder_setting"
+                    android:layout_width="@dimen/main_navigation_view_icon_size"
+                    android:layout_height="@dimen/main_navigation_view_icon_size"
+                    android:src="@drawable/main_nav_account_setting"
+                    android:layout_marginBottom="@dimen/info_dialog_large_margin"
+                    android:layout_marginLeft="@dimen/info_dialog_large_margin"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

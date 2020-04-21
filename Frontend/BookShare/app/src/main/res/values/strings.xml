@@ -1,6 +1,22 @@
 <resources>
+    <string name="sign_up_toast_error">پر کردن همه‌ی موارد بالا الزامی است</string>
     <string name="app_name">BookShare</string>
     <string name="entrance_tab_1">ورود</string>
-    <string name="entrance_tab_2">ثبتنام</string>
-
+    <string name="entrance_tab_2">ثبت‌نام</string>
+    <string name="sign_in_forgot_password">بازیابی رمز عبور</string>
+    <string name="sign_in_username">نامِ کاربری</string>
+    <string name="sign_in_password">رمز عبور</string>
+    <string name="sign_up_first_name">نام</string>
+    <string name="sign_up_last_name">نامِ خانوادگی</string>
+    <string name="sign_up_last_email">رایانامه</string>
+    <string name="info_dialog_info">مشخصات فردی</string>
+    <string name="info_dialog_books">کتب شما</string>
+    <string name="info_dialog_lent">کتب قرض گرفته شده</string>
+    <string name="info_dialog_borrowed">کتب قرض داده شده</string>
+    <string name="retrieval_title">رایانامه‌ی خود را وارد کنید</string>
+    <string name="retrieval_send">دریافتِ کد</string>
+    <string name="retrieval_subtitle">کد ارسال شده را وارد کنید</string>
+    <string name="retrieval_time">5:59</string>
+    <string name="retrieval_submit">راستی‌آزمایی</string>
+    <string name="retrieval_code_hint">کد</string>
 </resources>

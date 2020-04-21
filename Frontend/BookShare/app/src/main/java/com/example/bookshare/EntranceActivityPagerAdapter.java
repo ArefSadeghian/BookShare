@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 
 public class EntranceActivityPagerAdapter extends FragmentStatePagerAdapter {
+    SignInFragment signInFragment;
+    SignUpFragment signUpFragment;
     public EntranceActivityPagerAdapter(FragmentManager fm) {
         super(fm,FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
@@ -14,11 +16,11 @@ public class EntranceActivityPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment result;
         if(position==0){
-            result = new SignInFragment();
-            return result;
+            signInFragment = new SignInFragment();
+            return signInFragment;
         }
-        result = new SignUpFragment();
-        return result;
+        signUpFragment = new SignUpFragment();
+        return signUpFragment;
     }
 
     @Override

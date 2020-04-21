@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         sharedPreferences = getSharedPreferences("com.example.bookshare", MODE_PRIVATE);
-        new Handler().postDelayed(this,1000);
+        new Handler().postDelayed(this,3000);
         if(AnimationFinished){
             if(sharedPreferences.getBoolean("app_first",true)){
                 Intent intent = new Intent(SplashActivity.this,EntranceActivity.class);
@@ -33,6 +33,7 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
                 SplashActivity.this.finish();
             }
         }
+        DataLoaded = true;
     }
 
     private void initializeInformation() {
@@ -44,7 +45,7 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
                     sharedPreferences.getString("lastName","lastName"),
                     sharedPreferences.getString("email","email"),
                     sharedPreferences.getString("avatarAddress","avatarAddress"),
-                    sharedPreferences.getInt("username",1));
+                    sharedPreferences.getInt("id",1));
         }
     }
 

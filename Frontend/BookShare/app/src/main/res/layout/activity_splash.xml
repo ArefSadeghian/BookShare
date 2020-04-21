@@ -11,6 +11,7 @@
     <ImageView
         android:layout_width="@dimen/splash_icon_side"
         android:layout_height="@dimen/splash_icon_side"
+        android:src="@drawable/main_nav_account_setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

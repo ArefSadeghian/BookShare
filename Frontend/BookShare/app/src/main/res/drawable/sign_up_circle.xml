@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:fillColor="@color/sign_up_top_background"
+      android:pathData="M12,24H24V12A12,12 0,0 1,12 24Z"/>
+  <path
+      android:fillColor="@color/sign_up_top_background"
+      android:pathData="M12,0A12,12 0,0 1,24 12V0Z"/>
+  <path
+      android:fillColor="@color/sign_up_top_background"
+      android:pathData="M0,12V24H12A12,12 0,0 1,0 12Z"/>
+  <path
+      android:fillColor="@color/sign_up_top_background"
+      android:pathData="M12,0H0V12A12,12 0,0 1,12 0Z"/>
+</vector>

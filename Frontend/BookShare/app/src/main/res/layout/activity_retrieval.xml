@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sign_in_background">
-
+    android:background="@color/sign_in_background"
+    tools:context=".RetrievalActivity">
     <LinearLayout
         android:layout_width="@dimen/sign_in_card_width"
         android:layout_height="wrap_content"
@@ -18,7 +18,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sign_in_card_height"
+            android:layout_margin="@dimen/sign_inner_margin"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_weight="1"
+                android:fontFamily="@font/dosis"
+                android:layout_gravity="center"
+                android:textColor="@color/sign_forgot_text"
+                android:textSize="@dimen/sign_card_text_size"
+                android:text="@string/retrieval_title"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,52 +51,28 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/sign_in_username"
+                    android:id="@+id/retrieval_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
                     android:fontFamily="@font/dosis"
                     android:padding="@dimen/sign_card_text_padding"
-                    android:gravity="right"
-                    android:hint="@string/sign_in_username"
+                    android:hint="@string/sign_up_last_email"
                     android:textColorHint="@color/sign_hints"
                     android:textColor="@color/sign_texts"
                     android:textSize="@dimen/sign_card_text_size"
                     android:inputType="text"/>
             </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_in_card_height"
-                android:layout_margin="@dimen/sign_inner_margin"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/sign_cards"
-                app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                app:cardElevation="0dp">
-
-                <EditText
-                    android:id="@+id/sign_in_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/transparent"
-                    android:fontFamily="@font/dosis"
-                    android:padding="@dimen/sign_card_text_padding"
-                    android:hint="@string/sign_in_password"
-                    android:textColorHint="@color/sign_hints"
-                    android:textColor="@color/sign_texts"
-                    android:textSize="@dimen/sign_card_text_size"
-                    android:inputType="numberPassword"
-                    android:gravity="right"/>
-            </androidx.cardview.widget.CardView>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/sign_in_card_height"
                 android:layout_margin="@dimen/sign_inner_margin"
+                android:gravity="left"
                 android:orientation="horizontal"
                 android:layout_weight="1">
                 <TextView
-                    android:id="@+id/sign_in_retrieve"
+                    android:visibility="gone"
+                    android:id="@+id/retrieval_code_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -89,9 +81,9 @@
                     android:layout_gravity="center"
                     android:textColor="@color/sign_forgot_text"
                     android:textSize="@dimen/sign_card_text_size"
-                    android:text="@string/sign_in_forgot_password"/>
+                    android:text="@string/retrieval_subtitle"/>
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/sign_in_sign_button"
+                    android:id="@+id/retrieval_email_button"
                     android:layout_width="@dimen/sign_in_sign_button_width"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
@@ -107,12 +99,73 @@
                         android:layout_gravity="center"
                         android:textColor="@color/sign_in_sign_button_text"
                         android:textSize="@dimen/sign_card_text_size"
-                        android:text="@string/entrance_tab_1"/>
+                        android:text="@string/retrieval_send"/>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sign_in_card_height"
+                android:layout_margin="@dimen/sign_inner_margin"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/sign_cards"
+                app:cardCornerRadius="@dimen/sign_card_corner_radius"
+                app:cardElevation="0dp">
 
+                <EditText
+                    android:id="@+id/retrieval_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:fontFamily="@font/dosis"
+                    android:padding="@dimen/sign_card_text_padding"
+                    android:hint="@string/retrieval_code_hint"
+                    android:textColorHint="@color/sign_hints"
+                    android:textColor="@color/sign_texts"
+                    android:textSize="@dimen/sign_card_text_size"
+                    android:inputType="numberPassword"
+                    android:gravity="right"/>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sign_in_card_height"
+                android:layout_margin="@dimen/sign_inner_margin"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/retrieval_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/dosis"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sign_forgot_text"
+                    android:textSize="@dimen/sign_card_text_size"
+                    android:text="@string/retrieval_time"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/retrieval_code_button"
+                    android:layout_width="@dimen/sign_in_sign_button_width"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    app:cardBackgroundColor="@color/sign_in_sign_button"
+                    app:cardCornerRadius="@dimen/sign_in_sign_button_corner_radius"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/dosis"
+                        android:layout_gravity="center"
+                        android:textColor="@color/sign_in_sign_button_text"
+                        android:textSize="@dimen/sign_card_text_size"
+                        android:text="@string/retrieval_submit"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
