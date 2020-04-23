@@ -22,20 +22,20 @@ class EditedUserSerializer(serializers.ModelSerializer):
 
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
-    password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    password_confirmation = serializers.CharField(style={'input_type': 'password'}, write_only=True)
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'image', 'password', 'password_repeat']
+        fields = ['first_name', 'last_name', 'username', 'email', 'image', 'password', 'password_confirmation']
         extra_kwargs = {
-            'password_repeat': {'write_only': True}
+            'password_confirmation': {'write_only': True}
         }
 
     def save(self):
         password = self.validated_data['password']
-        password_repeat = self.validated_data['password_repeat']
+        password_confirmation = self.validated_data['password_confirmation']
         
-        if password != password_repeat:
+        if password != password_confirmation:
             raise serializers.ValidationError({'password': 'Passwords must match!'})
 
         image = ''
@@ -45,10 +45,10 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
             username = self.validated_data['username'],
             first_name = self.validated_data['first_name'],
             last_name = self.validated_data['last_name'],
-            password = password,
             email = self.validated_data['email'],
             image = image
         )
+        new_user.set_password(password)
 
         return new_user
 

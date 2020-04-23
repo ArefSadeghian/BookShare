@@ -1,23 +1,25 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.contrib.auth import authenticate
-from rest_framework.generics import UpdateAPIView
-from account.tokens import account_activation_token
-
-from rest_framework.authtoken.models import Token
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage, send_mail
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from account.models import User
-from .serializers import (UserSerializer, SelfUserSerializer, EditedUserSerializer, 
-                            UserRegisterationSerializer, ChangePasswordSerializer)
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_text
-from django.core.mail import EmailMessage, send_mail
+from account.tokens import account_activation_token
+
+from .serializers import (ChangePasswordSerializer, EditedUserSerializer,
+                          SelfUserSerializer, UserRegisterationSerializer,
+                          UserSerializer)
 
 
 @api_view(['POST', ])
@@ -30,29 +32,46 @@ def api_register_user_view(request):
 
         email = request.data.get('email', '0_no_email_provided_0').lower()
         username = request.data.get('username', '0_no_username_provided_0')
+        first_name = request.data.get('first_name', '0_no_first_name_provided_0')
+        last_name = request.data.get('last_name', '0_no_last_name_provided_0')
+        password = request.data.get('password', '0_no_password_provided_0')
+        password_confirmation = request.data.get('password_confirmation', '0_no_password_confirmation_provided_0')
 
         if email == '0_no_email_provided_0':
-            data['response'] = 'Error'
-            data['erroe_message'] = 'No email was provided!'
-            return Response(data)
+            data['message'] = 'No email was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
         if username == '0_no_username_provided_0':
-            data['response'] = 'Error'
-            data['erroe_message'] = 'No username was provided!'
-            return Response(data)
+            data['message'] = 'No username was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
+        if first_name == '0_no_first_name_provided_0':
+            data['message'] = 'No first name was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
+        if last_name == '0_no_last_name_provided_0':
+            data['message'] = 'No last name was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
+        if password == '0_no_password_provided_0':
+            data['message'] = 'No password was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
+        if password_confirmation == '0_no_password_confirmation_provided_0':
+            data['message'] = 'No password confirmation was provided!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
         
         if validate_email(email) is not None:
-            data['response'] = 'Error'
-            data['error_message'] = 'Sorry, user with this email already exists!'
-            return Response(data)
+            data['message'] = 'Sorry, user with this email already exists!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
         if validate_username(username) is not None:
-            data['response'] = 'Error'
-            data['erroe_message'] = 'Sorry, user with this username already exists!'
-            return Response(data)
+            data['message'] = 'Sorry, user with this username already exists!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
+        if password != password_confirmation:
+            data['message'] = 'Passwords must match!'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
 
         # lowercase email:
         request_data = request.data.copy()
-        if 'email' in request_data:
-            request_data['email'] = email
+        request_data.pop('email', '0')
+        request_data['email'] = email.lower()
+
+        # serializing:
         serializer = UserRegisterationSerializer(data=request_data)
 
         if serializer.is_valid():
@@ -62,7 +81,7 @@ def api_register_user_view(request):
             new_user.is_active = False
             new_user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your account'
+            mail_subject = 'Activate Your BookShare Account'
             activation_token = account_activation_token.make_token(new_user)
             mail_message = render_to_string('activate_email_email.html', {
                         'user': new_user,
@@ -73,11 +92,12 @@ def api_register_user_view(request):
            
             email_destination = email
             EmailMessage(mail_subject, mail_message, to=[email_destination]).send()
-            return Response({'response': 'Please confirm your email address to complete the registration.'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Please confirm your email address to complete the registration.'}, status=status.HTTP_200_OK)
         
         else:
             data = serializer.errors
-            return Response(data)
+            data['message'] = 'invalid fields'
+            return Response(data, status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', ])
@@ -102,6 +122,7 @@ def activate(request, uidb64, token):
         data['email'] = user.email
         data['first_name'] = user.first_name
         data['last_name'] = user.last_name
+        data['image'] = user.image
         return Response(data, status=status.HTTP_200_OK)
 
     else:

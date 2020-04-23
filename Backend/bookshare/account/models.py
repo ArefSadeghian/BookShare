@@ -53,15 +53,15 @@ class User(AbstractBaseUser):
     first_name =        models.CharField(max_length=30)
     last_name =         models.CharField(max_length=40)
     username =          models.CharField(max_length=30, unique=True, null=False, blank=False, 
-                            validators=[RegexValidator('^(?=.{8,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$', message="Username can only contain alphabets, numbers, '_', or '.' in an accepted form;\nAnd, it should be 8 to 30 characters long.")])
-    email =             models.EmailField(max_length=100, unique=True)
+                            validators=[RegexValidator('^(?=.{8,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$', message="Username can only contain alphabets, numbers, '_', or '.' in an accepted manner;\nUsername should be 8 to 30 characters long.")])
+    email =             models.EmailField(max_length=254, unique=True)
 
     image =             models.ImageField(upload_to='images/', blank=True)
     books_count =       models.PositiveIntegerField(default=0, blank=True)
     rating =            models.FloatField(default=0.0, blank=True)
 
-    date_joined =       models.DateTimeField(verbose_name='date joined', auto_now_add=True)
-    last_login =        models.DateTimeField(verbose_name='last login', auto_now=True)
+    date_joined =       models.DateTimeField(verbose_name='date joined', auto_now_add=True, editable=False)
+    last_login =        models.DateTimeField(verbose_name='last login', auto_now=True, editable=False)
 
     is_admin =          models.BooleanField(default=False)
     is_active =         models.BooleanField(default=True)
