@@ -38,7 +38,7 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
         if password != password_confirmation:
             raise serializers.ValidationError({'password': 'Passwords must match!'})
 
-        image = ''
+        image = None
         if 'image' in self.validated_data:
             image = self.validated_data['image']
         new_user = User.objects.create_user(
@@ -46,7 +46,7 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
             first_name = self.validated_data['first_name'],
             last_name = self.validated_data['last_name'],
             email = self.validated_data['email'],
-            image = image
+            image = image,
         )
         new_user.set_password(password)
 
@@ -57,4 +57,3 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
     new_password_confirmation = serializers.CharField(required=True)
-    

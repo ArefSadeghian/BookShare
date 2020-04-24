@@ -1,9 +1,9 @@
-from django.urls import path, include
-
-from .views import (api_account_properties_view, api_register_user_view, activate,
-                    api_edit_account_view, ObtainAuthTokenView, ChangePasswordView, api_reset_password_view)
 from django.conf.urls import url
+from django.urls import include, path
 
+from .views import (ChangePasswordView, ObtainAuthTokenView, activate,
+                    api_account_properties_view, api_edit_account_view,
+                    api_register_user_view, api_reset_password_view)
 
 app_name = 'account'
 
@@ -18,4 +18,3 @@ urlpatterns = [
         activate, name='activate'),
     
 ]
-
