@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -28,5 +28,16 @@
         <item name="android:textSize">@dimen/entrance_tab_texts</item>
         <item name="android:typeface">normal</item>
         <item name="android:textColor">@color/entrance_tab_texts</item>
+    </style>
+
+    <style name="SignInputTextLayouts" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:colorPrimary">@color/colorAccent</item>
+        <item name="colorOnSurface">@color/colorYellow</item>
+        <item name="hintTextColor">@color/colorOrange</item>
+    </style>
+
+    <style name="SignSubtext" parent="TextAppearance.AppCompat.Button">
+        <item name="android:fontFamily">@font/dosis</item>
+        <item name="android:textSize">@dimen/sign_card_subtext_size</item>
     </style>
 </resources>

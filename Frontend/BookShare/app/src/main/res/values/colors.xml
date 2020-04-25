@@ -4,12 +4,10 @@
     <color name="colorPrimaryLight">#37474F</color>
     <color name="colorPrimary">#263238</color>
     <color name="colorPrimaryDark">#202632</color>
-    <color name="colorAccent">#1Eb980</color>
+    <color name="colorAccent" >#1Eb980</color>
     <color name="colorAccentDark">#045d56</color>
     <color name="colorOrange">#FF6859</color>
     <color name="colorYellow">#FFCF44</color>
-    <color name="colorPurple">#B15DFF</color>
-    <color name="colorBlue">#72DEFF</color>
     <color name="transparent">#00ffffff</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
@@ -23,9 +21,16 @@
     <color name="sign_in_sign_button">@color/colorAccent</color>
     <color name="sign_in_sign_button_text">@color/colorPrimaryDark</color>
     <color name="sign_texts">@color/white</color>
+    <color name="sign_subtexts">@color/colorYellow</color>
     <color name="sign_forgot_text">@color/colorYellow</color>
-    <color name="sign_hints">@color/silver</color>
-    <color name="sign_cards">@color/colorPrimaryUltraLight</color>
+    <color name="sign_hints">@color/colorAccent</color>
+    <color name="sign_textField_border">@color/colorAccent</color>
+    <color name="sign_textField_border_disabled">@color/silver</color>
+    <color name="sign_textField_border_error">@color/colorOrange</color>
+    <color name="sign_textField_helper">@color/colorAccent</color>
+    <color name="sign_textField_counter">@color/colorAccent</color>
+    <color name="sign_textField_counter_error">@color/colorOrange</color>
+
     <color name="sign_up_bottom_background">@color/colorPrimaryLight</color>
     <color name="sign_up_icons">@color/colorYellow</color>
     <color name="sign_up_top_background">@color/colorPrimary</color>
@@ -42,4 +47,5 @@
     <color name="info_dialog_body_title">@color/colorAccent</color>
     <color name="info_dialog_body_subtitle">@color/colorYellow</color>
     <color name="info_dialog_body_text">@color/white</color>
+    <color name="mtrl_textinput_default_box_stroke_color">@color/colorAccent</color>
 </resources>

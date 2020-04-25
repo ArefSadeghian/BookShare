@@ -40,12 +40,10 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
         if(MainActivity.MyAccount==null){
             MainActivity.MyAccount = new Account(
                     sharedPreferences.getString("username","username"),
-                    sharedPreferences.getString("password","password"),
                     sharedPreferences.getString("firstName","firstName"),
                     sharedPreferences.getString("lastName","lastName"),
                     sharedPreferences.getString("email","email"),
-                    sharedPreferences.getString("avatarAddress","avatarAddress"),
-                    sharedPreferences.getInt("id",1));
+                    sharedPreferences.getString("token",""));
         }
     }
 

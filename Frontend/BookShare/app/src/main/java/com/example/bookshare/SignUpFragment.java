@@ -1,52 +1,54 @@
 package com.example.bookshare;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
     EntranceActivity activity;
-    EditText username;
-    EditText password;
-    EditText firstName;
-    EditText lastName;
-    EditText email;
-    ImageView avatarEdit;
+    TextInputEditText username;
+    TextInputEditText password;
+    TextInputEditText passwordRepeat;
+    TextInputEditText firstName;
+    TextInputEditText lastName;
+    TextInputEditText email;
     ImageView avatar;
     FloatingActionButton fab;
     String avatarAddress;
+    FrameLayout frameLayout;
+
+    final String address = "https://sadbookshare.herokuapp.com/api/account/register";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_sign_up,container,false);
-        username = (EditText) view.findViewById(R.id.sign_up_username);
-        password = (EditText) view.findViewById(R.id.sign_up_password);
-        firstName = (EditText) view.findViewById(R.id.sign_up_first_name);
-        lastName = (EditText) view.findViewById(R.id.sign_up_last_name);
-        email = (EditText) view.findViewById(R.id.sign_up_email);
-        avatarEdit = (ImageView) view.findViewById(R.id.sign_up_avatar_edit);
+        username = (TextInputEditText) view.findViewById(R.id.sign_up_username);
+        password = (TextInputEditText) view.findViewById(R.id.sign_up_password);
+        passwordRepeat = (TextInputEditText) view.findViewById(R.id.sign_up_password_repeat);
+        firstName = (TextInputEditText) view.findViewById(R.id.sign_up_first_name);
+        lastName = (TextInputEditText) view.findViewById(R.id.sign_up_last_name);
+        email = (TextInputEditText) view.findViewById(R.id.sign_up_email);
         avatar = (ImageView) view.findViewById(R.id.sign_up_avatar);
         fab = (FloatingActionButton) view.findViewById(R.id.sign_up_fab);
+        frameLayout = (FrameLayout) view.findViewById(R.id.sign_up_top_frameLayout);
         return view;
     }
 
@@ -54,42 +56,106 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState){
         activity = (EntranceActivity) getActivity();
         fab.setOnClickListener(this);
-        avatarEdit.setOnClickListener(this);
+        frameLayout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v==fab){
-            if(okay(username)&&okay(password)&&okay(firstName)&&okay(lastName)&&okay(email)){
-                activity.signUpVerification(username.getText().toString(),password.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),email.getText().toString(),avatarAddress);
+            if(okay(username)&&okay(password)&&okay(passwordRepeat)&&okay(firstName)&&okay(lastName)&&okay(email)){
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("username",username.getText().toString());
+                    jsonObject.put("password",password.getText().toString());
+                    jsonObject.put("password_confirmation",passwordRepeat.getText().toString());
+                    jsonObject.put("email",email.getText().toString());
+                    jsonObject.put("first_name",firstName.getText().toString());
+                    jsonObject.put("last_name",lastName.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, address, jsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(activity, "Registration was successful", Toast.LENGTH_LONG).show();
+                        //Intent intent = new Intent(activity,MainActivity.class);
+                        //activity.startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(activity, new String(error.networkResponse.data), Toast.LENGTH_LONG).show();
+                    }
+                });
+                activity.queue.add(request);
             }
         }
-        else if(v==avatarEdit){
-            activity.chooseImage();
+        else if(v==frameLayout){
+            Toast.makeText(activity, "frameLayout", Toast.LENGTH_LONG).show();
         }
     }
 
-    private boolean okay(EditText username) {
-        if(username.getText().toString().matches("")){
-            toastMessage(activity,getString(R.string.sign_up_toast_error));
-            return false;
+    private boolean okay(TextInputEditText inputEditText) {
+        switch (inputEditText.getId()){
+            case R.id.sign_up_username:
+                if(username.getText().toString().length()>30||username.getText().toString().length()>30){
+                    username.setError(getString(R.string.sign_up_username_error1));
+                    return false;
+                }
+                else if(username.getText().toString().matches("")){
+                    username.setError(getString(R.string.sign_up_username_error2));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            case R.id.sign_up_password:
+                if(password.getText().toString().matches("")){
+                    password.setError(getString(R.string.sign_up_password_error1));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            case R.id.sign_up_password_repeat:
+                if(!passwordRepeat.getText().toString().matches(password.getText().toString())){
+                    passwordRepeat.setError(getString(R.string.sign_up_password_error2));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            case R.id.sign_up_first_name:
+                if(firstName.getText().toString().length()>30){
+                    firstName.setError(getString(R.string.sign_up_first_error));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            case R.id.sign_up_last_name:
+                if(lastName.getText().toString().length()>40){
+                    lastName.setError(getString(R.string.sign_up_last_error));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            case R.id.sign_up_email:
+                if(email.getText().toString().length()>254){
+                    email.setError(getString(R.string.sign_up_email_error1));
+                    return false;
+                }
+                else if(email.getText().toString().matches("")){
+                    email.setError(getString(R.string.sign_up_email_error2));
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            default:
+                return true;
         }
-        return true;
-    }
-
-    public static void toastMessage(Context context, String message){
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(),"fonts/dosis.ttf");
-        float TextSize = 0;
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        TextSize = context.getResources().getDimension(R.dimen.toast_text_size);
-        TextSize /= displayMetrics.density;
-        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        View view = toast.getView();
-        TextView textView = (TextView) view.findViewById(android.R.id.message);
-        textView.setTypeface(typeface);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,TextSize);
-        textView.setTextColor(Color.parseColor("#FFFFFF"));
-        toast.show();
     }
 
 }

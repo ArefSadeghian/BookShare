@@ -11,6 +11,8 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 
 public class EntranceActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
@@ -18,6 +20,7 @@ public class EntranceActivity extends AppCompatActivity implements TabLayout.OnT
     ViewPager viewPager;
     EntranceActivityPagerAdapter pagerAdapter;
     SharedPreferences sharedPreferences;
+    RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,18 +32,18 @@ public class EntranceActivity extends AppCompatActivity implements TabLayout.OnT
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
+        queue = Volley.newRequestQueue(this);
     }
 
-    public void signUpVerification(String u, String p, String f, String l, String e, String a){
-        MainActivity.MyAccount = new Account(u,p,f,l,e,"address",1);
+    public void entranceCompletion(String u, String f, String l, String e, String t){
+        MainActivity.MyAccount = new Account(u,f,l,e,t);
         sharedPreferences.edit()
                 .putBoolean("app_first",false)
                 .putString("username",u)
-                .putString("password",p)
                 .putString("firstName",f)
                 .putString("lastName",l)
-                .putString("avatarAddress",a)
-                .putInt("id", 1).commit();
+                .putString("email",e)
+                .putString("token",t).commit();
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }

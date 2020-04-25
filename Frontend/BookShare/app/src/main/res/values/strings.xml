@@ -6,6 +6,7 @@
     <string name="sign_in_forgot_password">بازیابی رمز عبور</string>
     <string name="sign_in_username">نامِ کاربری</string>
     <string name="sign_in_password">رمز عبور</string>
+    <string name="sign_in_password_repeat">تکرار رمز عبور</string>
     <string name="sign_up_first_name">نام</string>
     <string name="sign_up_last_name">نامِ خانوادگی</string>
     <string name="sign_up_last_email">رایانامه</string>
@@ -19,4 +20,16 @@
     <string name="retrieval_time">5:59</string>
     <string name="retrieval_submit">راستی‌آزمایی</string>
     <string name="retrieval_code_hint">کد</string>
+    <string name="sign_up_username_const">حداقل 8 حرف و حداکثر 30 حرف</string>
+    <string name="sign_up_username_error1">نام کاربری باید حداقل 8 حرف و حداکثر 30 حرف باشد</string>
+    <string name="sign_up_username_error2">داشتن نام کاربری الزامی است</string>
+    <string name="sign_up_first_const">حداکثر 30 حرف</string>
+    <string name="sign_up_first_error">نام باید حداکثر 30 حرف باشد</string>
+    <string name="sign_up_last_const">حداکثر 40 حرف</string>
+    <string name="sign_up_password_error1">داشتن رمز عبور الزامی است</string>
+    <string name="sign_up_password_error2">تکرار رمز اشتباه است</string>
+    <string name="sign_up_last_error">نام خانوادگی باید حداکثر 40 حرف باشد</string>
+    <string name="sign_up_email_const">حداکثر 254 حرف</string>
+    <string name="sign_up_email_error1">رایانامه باید حداکثر 254 حرف باشد</string>
+    <string name="sign_up_email_error2">ثبت رایانامه الزامی است</string>
 </resources>
