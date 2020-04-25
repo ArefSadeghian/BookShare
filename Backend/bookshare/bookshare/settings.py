@@ -11,22 +11,26 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'account/media/')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-2vo3%&22fy&-!aiv#tm%s-7t*d-r!3xq1o^epon@!0m0t6g^t'
+# SECRET_KEY = '-2vo3%&22fy&-!aiv#tm%s-7t*d-r!3xq1o^epon@!0m0t6g^t'
+SECRET_KEY = os.environ.get('SADBOOKSHARE_DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('SADBOOKSHARE_DJANGO_DEBUG') == "True")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'sadbookshare.herokuapp.com',
+]
 
 
 # Application definition
@@ -53,8 +57,8 @@ AUTH_USER_MODEL = 'account.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sadbookshare@gmail.com'
-EMAIL_HOST_PASSWORD = 'pzbxabxcrvoftvim'
+EMAIL_HOST_USER = os.environ.get('SADBOOKSHARE_DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('SADBOOKSHARE_DJANGO_EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 REST_FRAMEWORK = {
@@ -104,8 +108,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bookshare_db',
-        'USER': 'bookshare',
-        'PASSWORD': 'sadbsaa',
+        'USER': os.environ.get('SADBOOKSHARE_DJANGO_DB_USER'),
+        'PASSWORD': os.environ.get('SADBOOKSHARE_DJANGO_DB_PASSWORD'),
         'HOST': 'localhost',
     }
 }
@@ -147,4 +151,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'account/media/')
+MEDIA_URL = '/media/'
+
+
+django_heroku.settings(locals())
