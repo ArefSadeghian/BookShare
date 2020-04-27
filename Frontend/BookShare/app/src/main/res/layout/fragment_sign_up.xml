@@ -1,231 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/sign_up_top_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <View
-        android:id="@+id/sign_up_guideLine"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <FrameLayout
+        android:id="@+id/sign_up_avatar_frameLayout"
         android:layout_width="@dimen/sign_up_avatar_side"
         android:layout_height="@dimen/sign_up_avatar_side"
-        app:layout_constraintBottom_toTopOf="@id/sign_up_guideLine"
+        android:layout_margin="@dimen/sign_up_avatar_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true">
         <ImageView
             android:id="@+id/sign_up_avatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
             android:src="@drawable/sign_up_avatar"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/sign_up_circle"/>
-        <ImageView
-            android:id="@+id/sign_up_avatar_edit"
-            android:layout_width="@dimen/sign_up_icon_side"
-            android:layout_height="@dimen/sign_up_icon_side"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/sign_up_edit"/>
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="@dimen/sign_up_bottom_corner_radius"
-        android:background="@color/sign_up_bottom_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardBackgroundColor="@color/sign_up_bottom_background"
-        app:cardCornerRadius="@dimen/sign_up_bottom_corner_radius"
-        app:cardElevation="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_guideLine">
-        <LinearLayout
-            android:layout_width="@dimen/sign_up_linearLayout_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/sign_inner_margin"
-            android:layoutDirection="rtl"
-            android:orientation="vertical">
-            <LinearLayout
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@+id/sign_up_top_frameLayout"
+                android:layout_width="@dimen/sign_up_avatar_side"
+                android:layout_height="@dimen/sign_up_avatar_side"
+                android:layout_margin="@dimen/sign_up_avatar_margin"
+                android:background="@color/transparent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </FrameLayout>
+
+            <View
+                android:id="@+id/sign_up_guideLine"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/transparent"
+                android:layout_marginTop="@dimen/sign_up_avatar_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sign_up_top_frameLayout" />
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/sign_up_bottom_corner_radius"
+                android:background="@color/sign_up_bottom_background"
+                app:layout_constraintBottom_toBottomOf="@+id/sign_up_bottom_card"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <FrameLayout
+                android:id="@+id/sign_up_cover_frame1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/sign_up_bottom_background"
+                app:layout_constraintTop_toBottomOf="@+id/sign_up_bottom_card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sign_up_bottom_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_card_height"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal">
+                android:layout_height="0dp"
+                app:cardBackgroundColor="@color/sign_up_bottom_background"
+                app:cardCornerRadius="@dimen/sign_up_bottom_corner_radius"
+                app:cardElevation="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sign_up_guideLine">
+                <LinearLayout
+                    android:layout_width="@dimen/sign_up_linearLayout_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/sign_up_avatar_margin"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/sign_inner_margin"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/sign_cards"
-                    app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                    app:cardElevation="0dp">
-
-                    <EditText
-                        android:id="@+id/sign_up_username"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/transparent"
-                        android:gravity="right"
-                        android:fontFamily="@font/dosis"
-                        android:padding="@dimen/sign_card_text_padding"
-                        android:hint="@string/sign_in_username"
-                        android:textColorHint="@color/sign_hints"
-                        android:textColor="@color/sign_texts"
-                        android:textSize="@dimen/sign_card_text_size"
-                        android:inputType="text"/>
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="30"
+                        app:counterTextColor="@color/sign_subtexts"
+                        app:counterTextAppearance="@style/SignSubtext"
+                        app:counterOverflowTextColor="@color/sign_textField_counter_error"
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/sign_subtexts"
+                        app:helperText="@string/sign_up_username_const"
+                        app:helperTextTextAppearance="@style/SignSubtext"
+                        app:errorTextColor="@color/colorOrange"
+                        app:errorTextAppearance="@style/SignSubtext"
+                        style="@style/SignInputTextLayouts">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/sign_inner_margin"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/sign_cards"
-                    app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                    app:cardElevation="0dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_in_username"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="text"
+                            android:gravity="right|center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/sign_up_password"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/transparent"
-                        android:hint="@string/sign_in_password"
-                        android:padding="@dimen/sign_card_text_padding"
-                        android:textColorHint="@color/sign_hints"
-                        android:fontFamily="@font/dosis"
-                        android:textColor="@color/sign_texts"
-                        android:textSize="@dimen/sign_card_text_size"
-                        android:inputType="numberPassword"
-                        android:gravity="right"/>
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:errorTextAppearance="@style/SignSubtext"
+                        app:errorTextColor="@color/colorOrange">
 
-            </LinearLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_in_password"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="textPassword"
+                            android:gravity="right|center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_card_height"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/sign_inner_margin"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/sign_cards"
-                    app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                    app:cardElevation="0dp">
-
-                    <EditText
-                        android:id="@+id/sign_up_first_name"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/transparent"
-                        android:hint="@string/sign_up_first_name"
-                        android:padding="@dimen/sign_card_text_padding"
-                        android:textColorHint="@color/sign_hints"
-                        android:gravity="right"
-                        android:fontFamily="@font/dosis"
-                        android:textColor="@color/sign_texts"
-                        android:textSize="@dimen/sign_card_text_size"
-                        android:inputType="text"/>
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:errorTextColor="@color/colorOrange"
+                        app:errorTextAppearance="@style/SignSubtext">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/sign_inner_margin"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/sign_cards"
-                    app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                    app:cardElevation="0dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_password_repeat"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_in_password_repeat"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="textPassword"
+                            android:gravity="right|center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/sign_up_last_name"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/transparent"
-                        android:padding="@dimen/sign_card_text_padding"
-                        android:fontFamily="@font/dosis"
-                        android:hint="@string/sign_up_last_name"
-                        android:textColorHint="@color/sign_hints"
-                        android:gravity="right"
-                        android:textColor="@color/sign_texts"
-                        android:textSize="@dimen/sign_card_text_size"
-                        android:inputType="text"/>
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="30"
+                        app:counterTextColor="@color/sign_subtexts"
+                        app:counterOverflowTextColor="@color/sign_textField_counter_error"
+                        app:counterTextAppearance="@style/SignSubtext"
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/sign_subtexts"
+                        app:helperText="@string/sign_up_first_const"
+                        app:helperTextTextAppearance="@style/SignSubtext"
+                        app:errorTextColor="@color/colorOrange"
+                        app:errorTextAppearance="@style/SignSubtext">
 
-            </LinearLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_first_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_up_first_name"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="text"
+                            android:gravity="right|center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_card_height"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/sign_inner_margin"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/sign_cards"
-                    app:cardCornerRadius="@dimen/sign_card_corner_radius"
-                    app:cardElevation="0dp">
-
-                    <EditText
-                        android:id="@+id/sign_up_email"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/transparent"
-                        android:hint="@string/sign_up_last_email"
-                        android:padding="@dimen/sign_card_text_padding"
-                        android:textColorHint="@color/sign_hints"
-                        android:fontFamily="@font/dosis"
-                        android:gravity="right"
-                        android:textColor="@color/sign_texts"
-                        android:textSize="@dimen/sign_card_text_size"
-                        android:inputType="textEmailAddress"/>
-                    <ImageView
-                        android:layout_width="@dimen/sign_up_icon_side"
-                        android:layout_height="@dimen/sign_up_icon_side"
-                        android:src="@drawable/sign_up_email"
-                        android:layout_gravity="left|center_vertical"
-                        android:layout_margin="@dimen/sign_up_icon_padding"/>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="40"
+                        app:counterTextColor="@color/sign_subtexts"
+                        app:counterOverflowTextColor="@color/sign_textField_counter_error"
+                        app:counterTextAppearance="@style/SignSubtext"
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/sign_subtexts"
+                        app:helperText="@string/sign_up_last_const"
+                        app:helperTextTextAppearance="@style/SignSubtext"
+                        app:errorTextColor="@color/colorOrange"
+                        app:errorTextAppearance="@style/SignSubtext">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_last_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_up_last_name"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="text"
+                            android:gravity="right|center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sign_up_text_margins"
+                        app:hintTextColor="@color/sign_hints"
+                        android:textColorHint="@color/silver"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxStrokeColor="@color/sign_textField_border"
+                        app:boxCornerRadiusTopStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/sign_text_border_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/sign_text_border_radius"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="254"
+                        app:counterTextColor="@color/sign_subtexts"
+                        app:counterOverflowTextColor="@color/sign_textField_counter_error"
+                        app:counterTextAppearance="@style/SignSubtext"
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/sign_subtexts"
+                        app:helperText="@string/sign_up_email_const"
+                        app:helperTextTextAppearance="@style/SignSubtext"
+                        app:errorTextColor="@color/colorOrange">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sign_up_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/sign_up_fab"
-        app:layout_constraintTop_toTopOf="@id/sign_up_guideLine"
-        app:layout_constraintBottom_toBottomOf="@id/sign_up_guideLine"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/sign_up_text_height"
+                            android:fontFamily="@font/dosis"
+                            android:padding="@dimen/sign_up_text_padding"
+                            android:hint="@string/sign_up_last_email"
+                            android:textColorHint="@color/sign_hints"
+                            android:textColor="@color/sign_texts"
+                            android:textSize="@dimen/sign_card_text_size"
+                            android:inputType="textEmailAddress"
+                            android:gravity="right|center_vertical"
+                            app:errorTextAppearance="@style/SignSubtext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/sign_up_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sign_up_fab"
+                app:layout_constraintTop_toTopOf="@+id/sign_up_guideLine"
+                app:layout_constraintBottom_toBottomOf="@+id/sign_up_guideLine"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
