@@ -11,6 +11,7 @@
     <dimen name="main_appBar_elevation">6dp</dimen>
     <dimen name="main_appBar_icon_margin">18dp</dimen>
     <dimen name="sign_inner_margin">8dp</dimen>
+    <dimen name="sign_outer_margin">24dp</dimen>
     <dimen name="sign_text_border_width">2dp</dimen>
     <dimen name="sign_text_border_radius">4dp</dimen>
     <dimen name="sign_card_corner_radius">4dp</dimen>
@@ -40,5 +41,6 @@
     <dimen name="info_dialog_body_title_size">20dp</dimen>
     <dimen name="info_dialog_body_subtitle_size">16dp</dimen>
     <dimen name="info_dialog_body_text_size">16dp</dimen>
+    <dimen name="dialog_radius">8dp</dimen>
 
 </resources>

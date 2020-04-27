@@ -5,6 +5,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -32,19 +33,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuIcon.setOnClickListener(this);
         NavigationAccountSetting.setOnClickListener(this);
         Username = (TextView) findViewById(R.id.main_nav_header_username);
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         if(MyAccount!=null){
             Username.setText(MyAccount.Username);
         }
     }
-
     @Override
     public void onClick(View v) {
         if(v==MenuIcon){
             drawerLayout.openDrawer(Gravity.RIGHT);
         }
         else if(v==NavigationAccountSetting){
-            DialogFragment dialogFragment = new AccountDialog();
-            dialogFragment.show(getSupportFragmentManager(),"AccountDialog");
+            Intent intent = new Intent(this, AccountActivity.class);
+            intent.putExtra("username",MyAccount.Username);
+            intent.putExtra("firstName", MyAccount.FirstName);
+            intent.putExtra("lastName", MyAccount.LastName);
+            intent.putExtra("email", MyAccount.Email);
+            startActivity(intent);
         }
     }
 }

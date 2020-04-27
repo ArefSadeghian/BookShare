@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
@@ -32,7 +33,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     MaterialButton signCard;
     TextView retrieveView;
     final String address = "https://sadbookshare.herokuapp.com/api/account/login";
-    int statusCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -69,17 +69,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        JSONArray data = response.getJSONArray("login");
-                        JSONObject object = data.getJSONObject(0);
-                        Toast.makeText(activity, object.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, response.getString("message"), Toast.LENGTH_LONG).show();
                         activity.entranceCompletion(
-                                object.getString("username"),
-                                object.getString("first_name"),
-                                object.getString("last_name"),
-                                object.getString("email"),
-                                object.getString("token"));
-                        Intent intent = new Intent(activity,MainActivity.class);
-                        activity.startActivity(intent);
+                                response.getString("username"),
+                                response.getString("first_name"),
+                                response.getString("last_name"),
+                                response.getString("email"),
+                                response.getString("token"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

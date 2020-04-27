@@ -48,4 +48,6 @@
     <color name="info_dialog_body_subtitle">@color/colorYellow</color>
     <color name="info_dialog_body_text">@color/white</color>
     <color name="mtrl_textinput_default_box_stroke_color">@color/colorAccent</color>
+    <color name="dialog_background">@color/colorPrimary</color>
+    <color name="dialog_forground">@color/colorAccent</color>
 </resources>

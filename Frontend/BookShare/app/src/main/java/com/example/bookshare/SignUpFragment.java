@@ -78,8 +78,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(activity, "Registration was successful", Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(activity,MainActivity.class);
-                        //activity.startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -91,14 +89,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             }
         }
         else if(v==frameLayout){
-            Toast.makeText(activity, "frameLayout", Toast.LENGTH_LONG).show();
+
         }
     }
 
     private boolean okay(TextInputEditText inputEditText) {
         switch (inputEditText.getId()){
             case R.id.sign_up_username:
-                if(username.getText().toString().length()>30||username.getText().toString().length()>30){
+                if(username.getText().toString().length()>30||username.getText().toString().length()<8){
                     username.setError(getString(R.string.sign_up_username_error1));
                     return false;
                 }
