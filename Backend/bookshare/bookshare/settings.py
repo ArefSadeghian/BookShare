@@ -138,6 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+MSG_LANGUAGE = 'Persian'
 
 TIME_ZONE = 'UTC'
 
@@ -155,7 +156,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'account/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'account/media')
 MEDIA_URL = '/media/'
 
 
