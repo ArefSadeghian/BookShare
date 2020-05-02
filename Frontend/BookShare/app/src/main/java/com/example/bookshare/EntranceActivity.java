@@ -5,15 +5,31 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntranceActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
     TabLayout tabLayout;
@@ -36,7 +52,7 @@ public class EntranceActivity extends AppCompatActivity implements TabLayout.OnT
     }
 
     public void entranceCompletion(String u, String f, String l, String e, String t){
-        MainActivity.MyAccount = new Account(u,f,l,e,t);
+        MainActivity.MyAccount = Account.getInstance(u,f,l,e,t);
         sharedPreferences.edit()
                 .putBoolean("app_first",false)
                 .putString("username",u)
@@ -88,4 +104,5 @@ public class EntranceActivity extends AppCompatActivity implements TabLayout.OnT
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
 }

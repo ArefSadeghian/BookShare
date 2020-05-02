@@ -5,11 +5,18 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +30,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,10 +46,18 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     TextInputEditText email;
     SharedPreferences sharedPreferences;
     RequestQueue queue;
+    String avatarAddress;
+    ImageView avatarImageView;
+    FrameLayout avatarLayout;
+    private Bitmap bitmap;
+
+    private static final String ROOT_URL = "https://sadbookshare.herokuapp.com/api/account/edit_image";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        avatarImageView = (ImageView) findViewById(R.id.account_avatar);
         username = (TextInputEditText) findViewById(R.id.account_username);
         password = (MaterialButton) findViewById(R.id.account_password);
         firstName = (TextInputEditText) findViewById(R.id.account_first_name);
@@ -90,13 +107,56 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
         password.setOnClickListener(this);
+        avatarLayout = (FrameLayout) findViewById(R.id.account_top_frameLayout);
+        avatarLayout.setOnClickListener(this);
+    }
 
+    public void chooseImage() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+        Intent chooseIntent = Intent.createChooser(getIntent,"Select Image");
+        chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+        startActivityForResult(chooseIntent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent){
+        super.onActivityResult(requestCode,resultCode,imageReturnedIntent);
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                Uri picUri = imageReturnedIntent.getData();
+                avatarAddress = getPath(picUri);
+                if (avatarAddress != null) {
+                    try {
+                        avatarAddress = imageReturnedIntent.getData().toString();
+                        avatarImageView.setImageURI(imageReturnedIntent.getData());
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), picUri);
+                        uploadBitmap(bitmap);
+                    } catch (IOException e) {
+                        avatarAddress = "";
+                        avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
+                    }
+                }
+
+            }
+            else {
+                avatarAddress = "";
+                avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
+            }
+        }
     }
 
     @Override
     public void onClick(View v) {
-        DialogFragment dialogFragment = new PasswordChangeDialog();
-        dialogFragment.show(getSupportFragmentManager(),"PasswordChangeDialog");
+        if(v==avatarLayout){
+            chooseImage();
+        }
+        else {
+            DialogFragment dialogFragment = new PasswordChangeDialog();
+            dialogFragment.show(getSupportFragmentManager(),"PasswordChangeDialog");
+        }
     }
 
     public void sendRequest(final String key, final String value) {
@@ -142,7 +202,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         queue.add(request);
     }
 
-    public void sendResponse(String old, String recent, String recentNew) {
+    public void sendRequest(String old, String recent, String recentNew) {
         String address = "https://sadbookshare.herokuapp.com/api/account/change_password";
         JSONObject jsonObject = new JSONObject();
         try {
@@ -178,5 +238,63 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             }
         };
         queue.add(request);
+    }
+
+
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    private void uploadBitmap(final Bitmap bitmap) {
+
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.PUT, ROOT_URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("image", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+        queue.add(volleyMultipartRequest);
     }
 }

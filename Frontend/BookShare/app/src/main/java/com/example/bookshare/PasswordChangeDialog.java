@@ -48,7 +48,7 @@ public class PasswordChangeDialog extends DialogFragment implements View.OnClick
             recentRepeat.setError(getString(R.string.sign_up_password_error2));
         }
         else {
-            activity.sendResponse(old.getText().toString(), recent.getText().toString(), recentRepeat.getText().toString());
+            activity.sendRequest(old.getText().toString(), recent.getText().toString(), recentRepeat.getText().toString());
             dismiss();
         }
     }
