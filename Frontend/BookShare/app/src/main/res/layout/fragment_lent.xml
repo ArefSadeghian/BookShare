@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/lent_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/main_fab_margin"
+        android:clickable="true"
+        app:srcCompat="@drawable/main_fab_plus" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lent_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

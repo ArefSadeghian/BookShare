@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView MenuIcon;
     ImageView NavigationAccountSetting;
     TextView Username;
+    ImageView Avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuIcon.setOnClickListener(this);
         NavigationAccountSetting.setOnClickListener(this);
         Username = (TextView) findViewById(R.id.main_nav_header_username);
+        Avatar = (ImageView) findViewById(R.id.main_nav_haeder_avatar);
 
     }
 
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         if(MyAccount!=null){
             Username.setText(MyAccount.Username);
+        }
+        if(MyAccount.Avatar!=null){
+            Avatar.setImageBitmap(MainActivity.MyAccount.Avatar);
         }
     }
     @Override

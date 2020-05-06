@@ -10,6 +10,7 @@
     <dimen name="main_appBar_height">64dp</dimen>
     <dimen name="main_appBar_elevation">6dp</dimen>
     <dimen name="main_appBar_icon_margin">18dp</dimen>
+    <dimen name="main_fab_margin">24dp</dimen>
     <dimen name="sign_inner_margin">8dp</dimen>
     <dimen name="sign_outer_margin">24dp</dimen>
     <dimen name="sign_text_border_width">2dp</dimen>

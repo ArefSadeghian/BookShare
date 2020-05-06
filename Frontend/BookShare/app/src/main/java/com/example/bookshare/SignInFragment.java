@@ -1,18 +1,22 @@
 package com.example.bookshare;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,6 +27,8 @@ import org.json.JSONObject;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
@@ -33,6 +39,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     MaterialButton signCard;
     TextView retrieveView;
     final String address = "https://sadbookshare.herokuapp.com/api/account/login";
+    String address1;
+
+    String myUsername;
+    String myPassword;
+    String myFirstName;
+    String myLastName;
+    String myEmail;
+    Bitmap myAvatar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -76,6 +90,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                                 response.getString("last_name"),
                                 response.getString("email"),
                                 response.getString("token"));
+                        loadImage();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -86,8 +101,35 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(activity, new String(error.networkResponse.data), Toast.LENGTH_LONG).show();
                 }
             });
-
             activity.queue.add(request);
+
+
         }
+    }
+
+    private void loadImage(){
+        address1 = "https://sadbookshare.herokuapp.com/api/account/"+activity.sharedPreferences.getString("username","username")+"/profile_image";
+        ImageRequest request1 = new ImageRequest(address1, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                MainActivity.MyAccount = Account.getInstance(response);
+                Toast.makeText(activity, "Image fetched successfully", Toast.LENGTH_SHORT).show();
+                activity.logIn();
+            }
+        }, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_4444, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(activity, "Image not fetched", Toast.LENGTH_SHORT).show();
+                activity.logIn();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+activity.sharedPreferences.getString("token",""));
+                return headers;
+            }
+        };
+        activity.queue.add(request1);
     }
 }

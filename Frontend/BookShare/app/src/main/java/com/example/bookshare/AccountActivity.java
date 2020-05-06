@@ -32,6 +32,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,6 +111,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         password.setOnClickListener(this);
         avatarLayout = (FrameLayout) findViewById(R.id.account_top_frameLayout);
         avatarLayout.setOnClickListener(this);
+        if(MainActivity.MyAccount.Avatar!=null){
+            avatarImageView.setImageBitmap(MainActivity.MyAccount.Avatar);
+        }
     }
 
     public void chooseImage() {
@@ -123,28 +128,36 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent){
-        super.onActivityResult(requestCode,resultCode,imageReturnedIntent);
-        if(requestCode==1){
-            if(resultCode==RESULT_OK){
-                Uri picUri = imageReturnedIntent.getData();
-                avatarAddress = getPath(picUri);
-                if (avatarAddress != null) {
-                    try {
-                        avatarAddress = imageReturnedIntent.getData().toString();
-                        avatarImageView.setImageURI(imageReturnedIntent.getData());
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), picUri);
-                        uploadBitmap(bitmap);
-                    } catch (IOException e) {
-                        avatarAddress = "";
-                        avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
+        try {
+            super.onActivityResult(requestCode,resultCode,imageReturnedIntent);
+            if(requestCode==1){
+                if(resultCode==RESULT_OK){
+                    Uri picUri = imageReturnedIntent.getData();
+                    avatarAddress = picUri.toString();//getPath(picUri);
+                    if (avatarAddress != null) {
+                        try {
+                            avatarImageView.setImageURI(imageReturnedIntent.getData());
+                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), picUri);
+                            MainActivity.MyAccount.Avatar = bitmap;
+                            uploadBitmap(bitmap);
+                        } catch (IOException e) {
+                            avatarAddress = "";
+                            avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
+                        }
                     }
-                }
 
+                }
+                else {
+                    avatarAddress = "";
+                    avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
+                }
             }
-            else {
-                avatarAddress = "";
-                avatarImageView.setImageDrawable(getResources().getDrawable(R.drawable.sign_up_avatar));
-            }
+        }
+        catch (Exception e){
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            Toast.makeText(this, stringWriter.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -240,25 +253,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         queue.add(request);
     }
 
-
-    public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-    }
-
-
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
@@ -266,26 +260,33 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void uploadBitmap(final Bitmap bitmap) {
-
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.PUT, ROOT_URL,
                 new Response.Listener<NetworkResponse>() {
                     @Override
                     public void onResponse(NetworkResponse response) {
-                        try {
+                        Toast.makeText(AccountActivity.this,"Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        /*try {
                             JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Image uploaded successfully", Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(AccountActivity.this, String.valueOf(error.networkResponse.statusCode), Toast.LENGTH_LONG).show();
+                        Toast.makeText(AccountActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }) {
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+sharedPreferences.getString("token",""));
+                return headers;
+            }
 
             @Override
             protected Map<String, DataPart> getByteData() {

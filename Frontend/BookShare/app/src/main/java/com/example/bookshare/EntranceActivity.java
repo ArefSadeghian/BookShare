@@ -60,10 +60,12 @@ public class EntranceActivity extends AppCompatActivity implements TabLayout.OnT
                 .putString("lastName",l)
                 .putString("email",e)
                 .putString("token",t).commit();
+    }
+
+    public void logIn(){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent){
         super.onActivityResult(requestCode,resultCode,imageReturnedIntent);
